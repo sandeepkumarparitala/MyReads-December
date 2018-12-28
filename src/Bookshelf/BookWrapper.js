@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { update } from '../BooksAPI';
 
 class BookWrapper extends Component {
   constructor(props) {

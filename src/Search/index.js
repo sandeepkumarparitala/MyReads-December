@@ -1,19 +1,32 @@
 import React, { Component } from 'react';
 import * as BooksAPI from '../BooksAPI';
 import { Link } from 'react-router-dom';
+import BookCover from '../Bookshelf/BookWrapper';
 
 class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      queryResult: null
+      queryResult: 0
     };
   }
+  statusChange = async (Book, Shelf) => {
+    await BooksAPI.update(Book, Shelf);
+    this.updateBooks();
+  };
+
   searchQuery = async e => {
     const query = e.target.value;
+    if (!query.trim()) {
+      this.setState({ queryResult: 0 });
+      return;
+    }
     const queryResult = await BooksAPI.search(query);
-    this.setState({ queryResult });
-    console.log(queryResult);
+    if (!queryResult.error) {
+      this.setState({ queryResult });
+      return;
+    }
+    this.setState({ queryResult: 0 });
   };
   render() {
     const { queryResult: result } = this.state;
@@ -37,11 +50,19 @@ class Search extends Component {
               placeholder="Search by title or author"
               onChange={e => this.searchQuery(e)}
             />
-            {/* {?} */}
+            {result ? (
+              <div className="search-books-results">
+                <ol className="books-grid">
+                  {result &&
+                    result.map(Book => (
+                      <BookCover Book={Book} statusChange={this.statusChange} />
+                    ))}
+                </ol>
+              </div>
+            ) : (
+              <div>coundn't able to find</div>
+            )}
           </div>
-        </div>
-        <div className="search-books-results">
-          <ol className="books-grid" />
         </div>
       </div>
     );
