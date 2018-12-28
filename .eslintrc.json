@@ -1,0 +1,15 @@
+{
+    "extends": ["plugin:prettier/recommended","react-app"],
+    "rules": {
+      "prettier/prettier": [1, {
+        "singleQuote": true
+      }]
+    },
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "ecmaFeatures": {
+          "jsx": true,
+          "modules": true
+      }
+    }
+  }
