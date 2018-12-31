@@ -1,45 +1,18 @@
 import React, { Component } from 'react';
 import BookCover from './BookWrapper';
-import * as BooksAPI from '../BooksAPI';
 
 class Landing extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentlyReading: undefined,
-      wantToRead: undefined,
-      Read: undefined
-    };
+  componentDidMount() {
+    this.props.updateBooks();
   }
-  updateBooks = async () => {
-    const allBooks = await BooksAPI.getAll();
-    console.log(allBooks);
-    const currentlyReading = [];
-    const Read = [];
-    const wantToRead = [];
-    allBooks.map(book => {
-      if (book.shelf === 'currentlyReading') {
-        currentlyReading.push(book);
-      } else if (book.shelf === 'wantToRead') {
-        wantToRead.push(book);
-      } else if (book.shelf === 'read') {
-        Read.push(book);
-      }
-    });
-    this.setState({ currentlyReading, wantToRead, Read });
-  };
-
-  componentWillMount() {
-    this.updateBooks();
-  }
-
-  statusChange = async (Book, Shelf) => {
-    await BooksAPI.update(Book, Shelf);
-    this.updateBooks();
-  };
-
   render() {
-    const { currentlyReading, wantToRead, Read } = this.state;
+    const {
+      currentlyReading,
+      wantToRead,
+      Read,
+      statusChange,
+      booksOnShelfs
+    } = this.props;
     return (
       <div className="list-books">
         <div className="list-books-title">
@@ -53,7 +26,12 @@ class Landing extends Component {
                 <ol className="books-grid">
                   {currentlyReading &&
                     currentlyReading.map(Book => (
-                      <BookCover Book={Book} statusChange={this.statusChange} />
+                      <BookCover
+                        key={`Book-${Book.id}`}
+                        Book={Book}
+                        statusChange={statusChange}
+                        booksOnShelfs={booksOnShelfs}
+                      />
                     ))}
                 </ol>
               </div>
@@ -64,7 +42,12 @@ class Landing extends Component {
                 <ol className="books-grid">
                   {wantToRead &&
                     wantToRead.map(Book => (
-                      <BookCover Book={Book} statusChange={this.statusChange} />
+                      <BookCover
+                        key={`Book-${Book.id}`}
+                        Book={Book}
+                        statusChange={statusChange}
+                        booksOnShelfs={booksOnShelfs}
+                      />
                     ))}
                 </ol>
               </div>
@@ -75,7 +58,12 @@ class Landing extends Component {
                 <ol className="books-grid">
                   {Read &&
                     Read.map(Book => (
-                      <BookCover Book={Book} statusChange={this.statusChange} />
+                      <BookCover
+                        key={`Book-${Book.id}`}
+                        Book={Book}
+                        statusChange={statusChange}
+                        booksOnShelfs={booksOnShelfs}
+                      />
                     ))}
                 </ol>
               </div>

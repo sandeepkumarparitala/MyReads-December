@@ -7,18 +7,18 @@ class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      queryResult: 0
+      shelfvalue: 'none',
+      queryResult: false
     };
   }
   statusChange = async (Book, Shelf) => {
     await BooksAPI.update(Book, Shelf);
-    this.updateBooks();
   };
 
   searchQuery = async e => {
     const query = e.target.value;
     if (!query.trim()) {
-      this.setState({ queryResult: 0 });
+      this.setState({ queryResult: false });
       return;
     }
     const queryResult = await BooksAPI.search(query);
@@ -30,6 +30,7 @@ class Search extends Component {
   };
   render() {
     const { queryResult: result } = this.state;
+    const { booksOnShelfs } = this.props;
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -37,14 +38,6 @@ class Search extends Component {
             Close
           </Link>
           <div className="search-books-input-wrapper">
-            {/*
-              NOTES: The search from BooksAPI is limited to a particular set of search terms.
-              You can find these search terms here:
-              https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-              However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-              you don't find a specific author or title. Every search is limited by search terms.
-            */}
             <input
               type="text"
               placeholder="Search by title or author"
@@ -53,15 +46,17 @@ class Search extends Component {
             {result ? (
               <div className="search-books-results">
                 <ol className="books-grid">
-                  {result &&
-                    result.map(Book => (
-                      <BookCover Book={Book} statusChange={this.statusChange} />
-                    ))}
+                  {result.map(Book => (
+                    <BookCover
+                      key={`Book-${Book.id}`}
+                      Book={Book}
+                      statusChange={this.statusChange}
+                      booksOnShelfs={booksOnShelfs}
+                    />
+                  ))}
                 </ol>
               </div>
-            ) : (
-              <div>coundn't able to find</div>
-            )}
+            ) : null}
           </div>
         </div>
       </div>

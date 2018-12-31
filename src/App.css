@@ -76,7 +76,6 @@ body, .app {
 /* search page */
 
 .search-books-bar {
-  position: fixed;
   width: 100%;
   top: 0;
   left: 0;
@@ -87,7 +86,7 @@ body, .app {
 
 .search-books-input-wrapper {
   flex: 1;
-  background: #e9e;
+  background: #7d7d7d;
 }
 
 .search-books-bar input {
@@ -195,4 +194,19 @@ button:active {
   padding: 20px 10px 0;
   text-align: center;
   font-size: 0.8em;
+}
+
+input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 3px solid #ccc;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+}
+
+input[type=text]:focus {
+  border: 3px solid #555;
 }
