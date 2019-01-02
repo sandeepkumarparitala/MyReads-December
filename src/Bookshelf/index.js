@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import BookCover from './BookWrapper';
 
 class Landing extends Component {
-  componentDidMount() {
-    this.props.updateBooks();
-  }
   render() {
     const {
       currentlyReading,

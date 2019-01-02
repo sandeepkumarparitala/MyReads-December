@@ -11,9 +11,6 @@ class Search extends Component {
       queryResult: false
     };
   }
-  statusChange = async (Book, Shelf) => {
-    await BooksAPI.update(Book, Shelf);
-  };
 
   searchQuery = async e => {
     const query = e.target.value;
@@ -28,9 +25,10 @@ class Search extends Component {
     }
     this.setState({ queryResult: 0 });
   };
+
   render() {
     const { queryResult: result } = this.state;
-    const { booksOnShelfs } = this.props;
+    const { booksOnShelfs, statusChange } = this.props;
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -43,20 +41,22 @@ class Search extends Component {
               placeholder="Search by title or author"
               onChange={e => this.searchQuery(e)}
             />
-            {result ? (
+            {result && (
               <div className="search-books-results">
                 <ol className="books-grid">
                   {result.map(Book => (
                     <BookCover
                       key={`Book-${Book.id}`}
                       Book={Book}
-                      statusChange={this.statusChange}
+                      statusChange={(Book, shelf) => {
+                        statusChange(Book, shelf);
+                      }}
                       booksOnShelfs={booksOnShelfs}
                     />
                   ))}
                 </ol>
               </div>
-            ) : null}
+            )}
           </div>
         </div>
       </div>

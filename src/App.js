@@ -25,14 +25,11 @@ class BooksApp extends React.Component {
   };
 
   updateBooks = async () => {
-    const allBooks = await BooksAPI.getAll();
+    const booksOnShelfs = await BooksAPI.getAll();
     const currentlyReading = [];
     const Read = [];
     const wantToRead = [];
-    const booksOnShelfs = [];
-    allBooks.forEach(book => {
-      const currentBookDetails = { id: book.id, shelf: book.shelf };
-      booksOnShelfs.push(currentBookDetails);
+    booksOnShelfs.forEach(book => {
       if (book.shelf === 'currentlyReading') {
         currentlyReading.push(book);
       } else if (book.shelf === 'wantToRead') {
@@ -41,7 +38,7 @@ class BooksApp extends React.Component {
         Read.push(book);
       }
     });
-    this.setState({ currentlyReading, wantToRead, Read, booksOnShelfs });
+    this.setState({ currentlyReading, Read, wantToRead, booksOnShelfs });
   };
   render() {
     const { currentlyReading, wantToRead, Read, booksOnShelfs } = this.state;
@@ -50,12 +47,12 @@ class BooksApp extends React.Component {
         <Switch>
           <Route
             path="/search"
-            component={() => (
+            render={({ history }) => (
               <Search
-                statusChange={this.statusChange}
-                currentlyReading={currentlyReading}
-                wantToRead={wantToRead}
-                Read={Read}
+                statusChange={(book, shelf) => {
+                  this.statusChange(book, shelf);
+                  history.push('/');
+                }}
                 booksOnShelfs={booksOnShelfs}
               />
             )}
@@ -63,7 +60,7 @@ class BooksApp extends React.Component {
           <Route
             exact
             path="/"
-            component={() => (
+            render={() => (
               <Landing
                 statusChange={this.statusChange}
                 currentlyReading={currentlyReading}

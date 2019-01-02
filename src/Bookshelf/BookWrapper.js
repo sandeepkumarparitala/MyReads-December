@@ -41,11 +41,10 @@ class BookWrapper extends Component {
               }}
             />
             <div className="book-shelf-changer">
-              <select
-                onChange={e => this.shelfChangeHandler(e)}
-                defaultValue={shelf}
-              >
-                <option value="move">Move to...</option>
+              <select onChange={e => this.shelfChangeHandler(e)} value={shelf}>
+                <option value="move" disabled>
+                  Move to...
+                </option>
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
                 <option value="read">Read</option>
