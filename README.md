@@ -2,6 +2,7 @@
 This app is working version of MY-reads project designed by udacity to understand the lifecycle and environment of react World
 
 My-Reads app allows user to categorize the books as 'currently Reading', 'want to read', 'read'. The backend server stores the details of books in the shelf and returns updated information on making API calls.  
+The user can also search books in the market place and can add them to the shelf's
 
 ## TL;DR
 
