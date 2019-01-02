@@ -6,10 +6,15 @@ import BookCover from '../Bookshelf/BookWrapper';
 class Search extends Component {
   constructor(props) {
     super(props);
+    this.inputRef = React.createRef();
     this.state = {
       shelfvalue: 'none',
       queryResult: false
     };
+  }
+
+  componentDidMount() {
+    this.inputRef.current.focus();
   }
 
   searchQuery = async e => {
@@ -37,6 +42,7 @@ class Search extends Component {
           </Link>
           <div className="search-books-input-wrapper">
             <input
+              ref={this.inputRef}
               type="text"
               placeholder="Search by title or author"
               onChange={e => this.searchQuery(e)}

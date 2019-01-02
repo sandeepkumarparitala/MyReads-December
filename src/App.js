@@ -15,6 +15,7 @@ class BooksApp extends React.Component {
       booksOnShelfs: undefined
     };
   }
+
   componentDidMount() {
     this.updateBooks();
   }
