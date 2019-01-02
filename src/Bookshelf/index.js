@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import BookCover from './BookWrapper';
-
+import { Link } from 'react-router-dom';
 class Landing extends Component {
   render() {
     const {
@@ -66,6 +66,10 @@ class Landing extends Component {
               </div>
             </div>
           </div>
+        </div>
+
+        <div>
+          <Link to="/search" className="open-search SearchButton" />
         </div>
       </div>
     );

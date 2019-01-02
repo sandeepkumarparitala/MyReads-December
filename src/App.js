@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import Search from './Search';
 import Landing from './Bookshelf';
 import * as BooksAPI from './BooksAPI';
@@ -73,9 +73,6 @@ class BooksApp extends React.Component {
             )}
           />
         </Switch>
-        <div>
-          <Link to="/search" className="open-search SearchButton" />
-        </div>
       </div>
     );
   }
